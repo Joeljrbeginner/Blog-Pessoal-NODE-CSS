@@ -1,18 +1,27 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, } from 'react-router-dom';
+import { Routes} from 'react-router-dom'
 import Navbar from './components/estaticos/navbar/Navbar';
 import Footer from './components/estaticos/footer/Footer';
 import Home from './paginas/home/Home';
 import './App.css';
-
+import { formGroupClasses } from '@mui/material';
+import Login from './paginas/login/Login';
 
 function App() { 
-  return (
-   <>
-    <Navbar />
-    <Home />
+  return(
+    <Router>
+        <Navbar />
+          <div style={{ minHeight: '100vh' }}>
+            <Routes> // Antigo Switch
+               <Route path="/" element={<Login />} />
+                 <Route path="/login" element={<Login />} />
+                    <Route path="/home" element={<Home />} />
+                   </Routes>
+          </div>
     <Footer />
-    </>
-  );
-}
-
-export default App;
+    
+    </Router>
+    )
+  }
+    export default App;
