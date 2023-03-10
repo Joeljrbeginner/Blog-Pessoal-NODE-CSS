@@ -1,11 +1,18 @@
-.banner {
+.caixa {
     background-color: rgba(0, 119, 255, 0.633);
-    color: rgba(240, 255, 248, 0.71);
+}
+
+.titulo{
+    color: color white !important;
+         font-weight: bold !important;
 }
 
 .botão1 {
-    background-color: beige important;
-    color: important;
-    margin-right: 16px important;
-    
+     border-color: white !important;
+     background-color: #3F51B5;
+      color: white !important;
+
+}
+.postagens{
+    background-color: white;
 }
