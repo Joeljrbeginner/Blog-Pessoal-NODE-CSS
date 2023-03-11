@@ -1,40 +1,115 @@
-import React from 'react';
-import { Grid, Typography, Button, TextField } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import './CadastroUsuario.css';
-import { Box } from '@mui/material';
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Box } from '@mui/material'
+import React, {ChangeEvent, useState, useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import './CadastroUsuario.css'
+import Usuario from '../../models/Usuario';
+import { cadastro } from '../../services/Service';
+import './CadastroUsuario.css'
+import { toast } from 'react-toastify';
+
+
 function CadastroUsuario() {
-    return (
-        <Grid container direction='row' justifyContent='center' alignItems='center'>
-            <Grid item xs={6} className='image2'></Grid>
-            <Grid item xs={6} alignContent='center'>
-                <Box paddingX={10}>
-                    <form>
-                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos2'>Cadastrar</Typography>
-                        <TextField id='nome' label='nome' variant='outlined' name='nome' margin='normal' fullWidth />
-                        <TextField id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal' fullWidth />
-                        <TextField id='usuario' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
-                        <TextField id='confirmarSenha' label='confirmarSenha' variant='outlined' name='confirmarSenha' margin='normal' type='password' fullWidth />
-                        <Box marginTop={2} textAlign='center'>
-                            <Link to='/login' className='text-decorator-none'>
-                                <Button variant='contained' color='secondary' className='btnCancelar'>
-                                    Cancelar
-                                </Button>
-                            </Link>
-                            <Button type='submit' variant='contained' color='primary'>
-                                    cadastrar
-                                </Button>
-                        </Box>
-                    </form>
-                </Box>
 
+  let navigate = useNavigate()
+  
+  const [user, setUser] = useState<Usuario>({
+    id: 0,
+    nome: '',
+    usuario: '',
+    foto: '',
+    senha: ''
+  })
+
+  const [userResult, setUserResult] = useState<Usuario>({
+    id: 0,
+    nome: '',
+    usuario: '',
+    foto: '',
+    senha: ''
+  })
+
+  const [confirmarSenha, setConfirmarSenha] = useState<String>('')
+
+  function confirmarSenhaHandle(event: ChangeEvent<HTMLInputElement>){
+    setConfirmarSenha(event.target.value)
+  }
+
+  function updateModel(event: ChangeEvent<HTMLInputElement>) {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  async function onSumit(event: ChangeEvent<HTMLFormElement>) {
+    event.preventDefault()
+    try {
+      if(user.senha === confirmarSenha) {
+        await cadastro('/usuarios/cadastrar', user, setUserResult);
+        toast.success('Usuario cadastrado com sucesso',{
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          })
+      } else {
+        toast.warning('As senhas não conferem',{
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          })
+      }
+    } catch (error) {
+      toast.error('Falha no cadastro, por favor, verifique os campos',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        })
+    }
+  }
+
+  useEffect(() => {
+    if(userResult.id !== 0) {
+      navigate('/login')
+    }
+  }, [userResult])
+
+  return (
+    <Grid container alignItems='center'>
+      <Grid item xs={6} className='fundoCadastro'></Grid>
+      <Grid item xs={6}>
+        <Box paddingX={12}>
+          <form onSubmit={onSumit}>
+            <Typography variant='h3' align='center'>Cadastre-se</Typography>
+            <TextField value={user.nome} onChange={(event: ChangeEvent<HTMLInputElement>) => updateModel(event)} label='Nome' id='nome' name='nome' variant='outlined' fullWidth margin='normal' />
+            <TextField value={user.usuario} onChange={(event: ChangeEvent<HTMLInputElement>) => updateModel(event)} label='usuario' id='usuario' name='usuario' variant='outlined' fullWidth margin='normal' />
+            <TextField value={user.foto} onChange={(event: ChangeEvent<HTMLInputElement>) => updateModel(event)} label='foto' id='foto' name='foto' variant='outlined' fullWidth margin='normal' />
+            <TextField value={user.senha} onChange={(event: ChangeEvent<HTMLInputElement>) => updateModel(event)} type='password' label='senha' id='senha' name='senha' variant='outlined' fullWidth margin='normal' />
+            <TextField value={confirmarSenha} onChange={(event: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(event)} type='password' label='confirmar senha' id='confirmarsenha' name='confirmarsenha' variant='outlined' fullWidth margin='normal' />
+            <Grid container justifyContent='space-around'>
+              <Link to='/login'><Button variant='contained' color='secondary'>Cancelar</Button></Link>
+              <Button type='submit' variant='contained' color='primary'>Cadastrar</Button>
             </Grid>
-
-        </Grid>
-
-
-    );
+          </form>
+        </Box>
+      </Grid>
+    </Grid>
+  )
 }
 
-
-export default CadastroUsuario;
+export default CadastroUsuario
