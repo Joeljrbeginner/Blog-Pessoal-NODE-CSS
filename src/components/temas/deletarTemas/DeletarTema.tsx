@@ -5,7 +5,7 @@
   import { toast } from 'react-toastify';
   import useLocalStorage from 'react-use-localstorage';
   import Tema from '../../../models/Tema';
-  import { buscaId, deleteId } from '../../../services/Service';
+  import { buscaId, deleteId } from '../../../services/Service1';
   import { TokenState } from '../../../store/tokens/tokensReducer';
   
   function DeletarTema() {

@@ -5,7 +5,7 @@ import { Box,Button,Card,CardActions,CardContent,Typography,} from '@mui/materia
   import { toast } from 'react-toastify';
   import useLocalStorage from 'react-use-localstorage';
   import Postagem from '../../../models/Postagem';
-  import { buscaId, deleteId, post } from '../../../services/Service';
+  import { buscaId, deleteId, post } from '../../../services/Service1';
   import { TokenState } from '../../../store/tokens/tokensReducer';
   
   function DeletarPostagem() {

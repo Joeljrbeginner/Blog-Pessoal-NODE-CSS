@@ -5,7 +5,7 @@ import {Box,Button,Card,CardActions,CardContent,Typography,} from '@mui/material
   import { toast } from 'react-toastify';
   import useLocalStorage from 'react-use-localstorage';
   import Postagem from '../../../models/Postagem';
-  import { busca } from '../../../services/Service';
+  import { busca } from '../../../services/Service1';
   import { TokenState } from '../../../store/tokens/tokensReducer';
   
   function ListaPostagens() {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useLocalStorage from 'react-use-localstorage';
 import Tema from '../../../models/Tema';
-import { busca } from '../../../services/Service';
+import { busca } from '../../../services/Service1';
 import './ListaTemas.css';
 import { Link, useNavigate } from 'react-router-dom';
 import {

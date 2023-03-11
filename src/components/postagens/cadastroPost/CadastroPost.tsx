@@ -6,7 +6,7 @@
   import useLocalStorage from 'react-use-localstorage';
   import Postagem from '../../../models/Postagem';
   import Tema from '../../../models/Tema';
-  import { busca, buscaId, post, put } from '../../../services/Service';
+  import { busca, buscaId, post, put } from '../../../services/Service1';
   import { TokenState } from '../../../store/tokens/tokensReducer';
   
   function CadastroPostagem() {
